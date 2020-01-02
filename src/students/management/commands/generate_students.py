@@ -10,4 +10,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         added_students = '\n---------------------------\n'.join(
             Student.generate_student() for i in range(100)).replace("<br />", "\n")
-        return f'100 students successfully added to DB. <br />{added_students}'
+        return f'100 students successfully added to DB: {added_students}'

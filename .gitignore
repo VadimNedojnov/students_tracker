@@ -4,4 +4,4 @@ temp/
 __pycache__/
 env/
 .idea/
-db.sqlite3/
+*.sqlite3

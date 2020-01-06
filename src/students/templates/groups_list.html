@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups List</title>
+</head>
+<body>
+
+<form action="/groups/" method="get">
+    <input name="name">
+    <input name="submit" type="submit">
+</form>
+
+{{ groups_list|safe }}
+
+</body>
+</html>

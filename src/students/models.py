@@ -1,6 +1,3 @@
-from random import randint
-
-
 from django.db import models
 from faker import Faker
 
@@ -19,34 +16,51 @@ class Student(models.Model):
     telephone = models.CharField(max_length=16)    #clear phone TODO
     address = models.CharField(max_length=255, null=True, blank=True)
 
-    def det_info(self):
-        return f'{self.first_name}, {self.last_name}, {self.birth_date}, {self.email}, ' \
-               f'{self.telephone}, {self.address}'
+    def get_info(self):
+        return f'First Name: {self.first_name}, <br>Last Name: {self.last_name}, ' \
+               f'<br>Birth date: {self.birth_date}, <br>Email: {self.email}, ' \
+               f'<br>Telephone: {self.telephone}, <br>Address: {self.address}'
 
     @classmethod
     def generate_student(cls):
         fake = Faker()
-        first_last_name = fake.name().split(" ")
-        student = cls(first_name=first_last_name[0],
-                      last_name=first_last_name[1],
+        student = cls(first_name=fake.first_name(),
+                      last_name=fake.last_name(),
                       birth_date=fake.date_between(start_date="-30y", end_date="-17y"),
                       email=fake.email(),
-                      telephone=randint(100000000, 99999999999),
+                      telephone=fake.phone_number(),
                       address=fake.address()
                       )
         student.save()
-        return f"<br />First Name: {student.first_name}; <br />Last Name: {student.last_name};" \
-               f"<br />Birth date: {student.birth_date}; <br />Email: {student.email};" \
-               f"<br />Telephone: {student.telephone}, <br />Address: {student.address}"
+        return f"First Name: {student.first_name}; <br>Last Name: {student.last_name};" \
+               f"<br>Birth date: {student.birth_date}; <br>Email: {student.email};" \
+               f"<br>Telephone: {student.telephone}, <br>Address: {student.address}"
 
 
 class Group(models.Model):
-    group_name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20)
     students_count = models.CharField(max_length=5)
     students_with_grants_count = models.CharField(max_length=5)
     group_leader_name = models.CharField(max_length=20)
     start_lessons_time = models.TimeField()
 
-    def det_info(self):
-        return f'{self.group_name}, {self.students_count}, {self.students_with_grants_count}, ' \
-               f'{self.group_leader_name}, {self.start_lessons_time}'
+    def get_info(self):
+        return f'Group Name: {self.name}, <br>Students count: {self.students_count}, ' \
+               f'<br>Students with grants count: {self.students_with_grants_count}, ' \
+               f'<br>Group leader name: {self.group_leader_name}, ' \
+               f'<br>Start lessons time: {self.start_lessons_time}'
+
+    @classmethod
+    def generate_group(cls):
+        fake = Faker()
+        group = cls(name=fake.company(),
+                    students_count=fake.random_int(min=10, max=35, step=1),
+                    students_with_grants_count=fake.random_int(min=0, max=5, step=1),
+                    group_leader_name=fake.name(),
+                    start_lessons_time=fake.time(pattern="%H:00:00", end_datetime=None)
+                    )
+        group.save()
+        return f"Group Name: {group.name}; <br />Students count: {group.students_count};" \
+               f"<br />Students with grants count: {group.students_with_grants_count}; " \
+               f"<br />Group leader name: {group.group_leader_name}; " \
+               f"<br />Start lessons time: {group.start_lessons_time}"

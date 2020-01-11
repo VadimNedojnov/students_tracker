@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 
 
 from teachers.models import Teacher
+from teachers.forms import TeachersAddForm
 
 
 def generate_teacher(request):
@@ -20,3 +21,16 @@ def teachers(request):
     for teacher in queryset:
         response += teacher.get_info() + '<br>' + '<br>'
     return render(request, 'teachers_list.html', context={'teachers_list': response})
+
+
+def teachers_add(request):
+    if request.method == "POST":
+        form = TeachersAddForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/teachers/')
+    else:
+        form = TeachersAddForm()
+    return render(request,
+                  'teachers_add.html',
+                  context={'form': form})

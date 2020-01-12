@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Groups</title>
+    <title>Contact</title>
 </head>
 <body>
 
-ADD GROUP
-<form action="{% url 'groups-add' %}" method="post">
+CONTACT
+<form action="{% url 'contact' %}" method="post">
     {% csrf_token %}
 {{ form.as_p }}
     <input name="submit" type="submit">

@@ -6,10 +6,18 @@
 </head>
 <body>
 
-<form action="/teachers/" method="get">
-    <input name="parameter">
-    <input name="submit" type="submit">
-</form>
+<div style="float:left;border-left">
+    <form action="{% url 'teachers' %}" method="get">
+        <input name="name">
+        <input name="submit" type="submit">
+    </form>
+</div>
+<div>
+    <form action="{% url 'teachers-add' %}">
+        <input type="submit" value="Add teacher" />
+    </form>
+</div>
+<br>
 
 {{ teachers_list|safe }}
 

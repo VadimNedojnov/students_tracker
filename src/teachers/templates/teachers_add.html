@@ -7,7 +7,7 @@
 <body>
 
 ADD TEACHER
-<form action="/teachers/add/" method="post">
+<form action="{% url 'teachers-add' %}" method="post">
     {% csrf_token %}
 {{ form.as_p }}
     <input name="submit" type="submit">

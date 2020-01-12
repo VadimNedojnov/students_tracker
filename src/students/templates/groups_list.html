@@ -6,10 +6,18 @@
 </head>
 <body>
 
-<form action="/groups/" method="get">
-    <input name="name">
-    <input name="submit" type="submit">
-</form>
+<div style="float:left;border-left">
+    <form action="{% url 'groups' %}" method="get">
+        <input name="name">
+        <input name="submit" type="submit">
+    </form>
+</div>
+<div>
+    <form action="{% url 'groups-add' %}">
+        <input type="submit" value="Add group" />
+    </form>
+</div>
+<br>
 
 {{ groups_list|safe }}
 

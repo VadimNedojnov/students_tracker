@@ -6,10 +6,18 @@
 </head>
 <body>
 
-<form action="/students/" method="get">
-    <input name="first_name">
-    <input name="submit" type="submit">
-</form>
+<div style="float:left;border-left">
+    <form action="{% url 'students' %}" method="get">
+        <input name="name">
+        <input name="submit" type="submit">
+    </form>
+</div>
+<div>
+    <form action="{% url 'students-add' %}">
+        <input type="submit" value="Add student" />
+    </form>
+</div>
+<br>
 
 {{ students_list|safe }}
 

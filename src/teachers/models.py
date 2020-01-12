@@ -12,7 +12,7 @@ class Teacher(models.Model):
     birth_date = models.DateField()
     email = models.EmailField()
     # add avatar TODO
-    telephone = models.CharField(max_length=16)    #clear phone TODO
+    telephone = models.CharField(max_length=16)    # clear phone TODO
     address = models.CharField(max_length=255, null=True, blank=True)
     subject = models.CharField(max_length=20)
     experience = models.CharField(max_length=3)

@@ -13,7 +13,7 @@ class Student(models.Model):
     birth_date = models.DateField()
     email = models.EmailField()
     # add avatar TODO
-    telephone = models.CharField(max_length=16)    #clear phone TODO
+    telephone = models.CharField(max_length=16)    # clear phone TODO
     address = models.CharField(max_length=255, null=True, blank=True)
 
     def get_info(self):

@@ -23,7 +23,7 @@ def students(request):
         # __contains = LIKE {}%
         queryset = queryset.filter(first_name__istartswith=fn)
     for student in queryset:
-        response += student.get_info() + f'<a href="{reverse("students-edit-for-link")}{student.id}">' \
+        response += student.get_info() + f'<a href="{reverse("students-edit", args=[student.id])}">' \
                                          f'<br>Edit</a>' + '<br>' + '<br>'
     return render(request, 'students_list.html', context={'students_list': response})
 
@@ -40,7 +40,7 @@ def groups(request):
         queryset = queryset.filter(name__contains=fn)
         queryset = queryset.filter(name__contains=fn)
     for group in queryset:
-        response += group.get_info() + f'<a href="{reverse("groups-edit-for-link")}{group.id}">' \
+        response += group.get_info() + f'<a href="{reverse("groups-edit", args=[group.id])}">' \
                                        f'<br>Edit</a>' + '<br>' + '<br>'
     return render(request, 'groups_list.html', context={'groups_list': response})
 

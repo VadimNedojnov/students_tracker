@@ -17,15 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 
-from students.views import generate_group, groups_add, groups, groups_edit
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('students/', include('students.urls')),
     path('teachers/', include('teachers.urls')),
-    path('group/', generate_group),
-    path('groups/list/', groups, name='groups'),
-    path('groups/add/', groups_add, name='groups-add'),
-    path('groups/edit/<int:pk>/', groups_edit, name='groups-edit'),
-    path('groups/edit/', groups_edit, name='groups-edit-for-link'),
+
 ]

@@ -23,5 +23,4 @@ urlpatterns = [
     path('list/', teachers, name='teachers'),
     path('add/', teachers_add, name='teachers-add'),
     path('edit/<int:pk>/', teachers_edit, name='teachers-edit'),
-    path('edit/', teachers_edit, name='teachers-add-for-link'),
 ]

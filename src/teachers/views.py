@@ -20,7 +20,7 @@ def teachers(request):
         queryset = queryset.filter(Q(first_name__contains=fn) |
                                    Q(last_name__contains=fn) | Q(email__contains=fn))
     for teacher in queryset:
-        response += teacher.get_info() + f'<a href="{reverse("teachers-add-for-link")}{teacher.id}">' \
+        response += teacher.get_info() + f'<a href="{reverse("teachers-edit", args=[teacher.id])}">' \
                                          f'<br>Edit</a>' + '<br>' + '<br>'
     return render(request, 'teachers_list.html', context={'teachers_list': response})
 

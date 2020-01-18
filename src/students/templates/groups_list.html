@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Groups List</title>
-</head>
+{% extends 'base.html' %}
+
+{% block content %}
 <body>
 
 <div style="float:left;border-left">
@@ -19,7 +16,28 @@
 </div>
 <br>
 
-{{ groups_list|safe }}
+<table style="width:70%">
+    <caption style="font-size:35px"><b>{{ page_title }}</b></caption>
+    <tr>
+        <th>ID</th>
+        <th>Group Name</th>
+        <th>Students Count</th>
+        <th>Students with grants</th>
+        <th>Group leader name</th>
+        <th>Start Lessons Time</th>
+        <th>Edit Link</th>
+    </tr>
+    {% for group in groups %}
+        <tr>
+            <td>{{ group.id }}</td>
+            <td>{{ group.name }}</td>
+            <td>{{ group.students_count }}</td>
+            <td>{{ group.students_with_grants_count }}</td>
+            <td>{{ group.group_leader_name }}</td>
+            <td>{{ group.start_lessons_time }}</td>
+            <td><a href="{% url 'groups-edit' group.id %}">Edit</a></td>
+        </tr>
+    {% endfor %}
+</table>
 
-</body>
-</html>
+{% endblock content %}

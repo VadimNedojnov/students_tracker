@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Teachers List</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block content %}
 <div style="float:left;border-left">
     <form action="{% url 'teachers' %}" method="get">
         <input name="name">
@@ -19,7 +14,34 @@
 </div>
 <br>
 
-{{ teachers_list|safe }}
+<table style="width:70%">
+    <caption style="font-size:35px"><b>{{ page_title }}</b></caption>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Birth Date</th>
+        <th>Email</th>
+        <th>Telephone</th>
+        <th>Address</th>
+        <th>Subject</th>
+        <th>Experience</th>
+        <th>Edit Link</th>
+    </tr>
+    {% for teacher in teachers %}
+        <tr>
+            <td>{{ teacher.id }}</td>
+            <td>{{ teacher.first_name }}</td>
+            <td>{{ teacher.last_name }}</td>
+            <td>{{ teacher.birth_date }}</td>
+            <td>{{ teacher.email }}</td>
+            <td>{{ teacher.telephone }}</td>
+            <td>{{ teacher.address }}</td>
+            <td>{{ teacher.subject }}</td>
+            <td>{{ teacher.experience }}</td>
+            <td><a href="{% url 'teachers-edit' teacher.id %}">Edit</a></td>
+        </tr>
+    {% endfor %}
+</table>
 
-</body>
-</html>
+{% endblock content %}

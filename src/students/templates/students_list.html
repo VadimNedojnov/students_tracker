@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Students List</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block content %}
 <div style="float:left;border-left">
     <form action="{% url 'students' %}" method="get">
         <input name="name">
@@ -19,7 +14,30 @@
 </div>
 <br>
 
-{{ students_list|safe }}
+<table style="width:70%">
+    <caption style="font-size:35px"><b>{{ page_title }}</b></caption>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Birth Date</th>
+        <th>Email</th>
+        <th>Telephone</th>
+        <th>Address</th>
+        <th>Edit Link</th>
+    </tr>
+    {% for student in students %}
+        <tr>
+            <td>{{ student.id }}</td>
+            <td>{{ student.first_name }}</td>
+            <td>{{ student.last_name }}</td>
+            <td>{{ student.birth_date }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.telephone }}</td>
+            <td>{{ student.address }}</td>
+            <td><a href="{% url 'students-edit' student.id %}">Edit</a></td>
+        </tr>
+    {% endfor %}
+</table>
 
-</body>
-</html>
+{% endblock content %}

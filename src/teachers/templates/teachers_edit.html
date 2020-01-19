@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Teachers</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block content %}
 EDIT TEACHERS
 <form action="{% url 'teachers-edit' pk %}" method="post">
     {% csrf_token %}
@@ -13,5 +8,4 @@ EDIT TEACHERS
     <input name="submit" type="submit">
 </form>
 
-</body>
-</html>
+{% endblock content %}

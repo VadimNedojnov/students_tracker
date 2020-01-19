@@ -13,8 +13,8 @@ def generate_student(request):
 
 def students(request):
     queryset = Student.objects.all()
-    response = ''
-    fn = request.GET.get('first_name')
+    # response = ''
+    fn = request.GET.get('name')
     if fn:
         # __contains = LIKE %{}%
         # queryset = queryset.filter(first_name__contains=fn)
@@ -22,10 +22,10 @@ def students(request):
         # queryset = queryset.filter(first_name__endswith=fn)
         # __contains = LIKE {}%
         queryset = queryset.filter(first_name__istartswith=fn)
-    for student in queryset:
-        response += student.get_info() + f'<a href="{reverse("students-edit", args=[student.id])}">' \
-                                         f'<br>Edit</a>' + '<br>' + '<br>'
-    return render(request, 'students_list.html', context={'students_list': response})
+    # for student in queryset:
+    #     response += student.get_info() + f'<a href="{reverse("students-edit", args=[student.id])}">' \
+    #                                      f'<br>Edit</a>' + '<br>' + '<br>'
+    return render(request, 'students_list.html', context={'students': queryset, 'page_title': 'Students List'})
 
 
 def generate_group(request):
@@ -34,15 +34,10 @@ def generate_group(request):
 
 def groups(request):
     queryset = Group.objects.all()
-    response = ''
     fn = request.GET.get('name')
     if fn:
         queryset = queryset.filter(name__contains=fn)
-        queryset = queryset.filter(name__contains=fn)
-    for group in queryset:
-        response += group.get_info() + f'<a href="{reverse("groups-edit", args=[group.id])}">' \
-                                       f'<br>Edit</a>' + '<br>' + '<br>'
-    return render(request, 'groups_list.html', context={'groups_list': response})
+    return render(request, 'groups_list.html', context={'groups': queryset, 'page_title': 'Groups List'})
 
 
 def students_add(request):
@@ -55,7 +50,7 @@ def students_add(request):
         form = StudentsAddForm()
     return render(request,
                   'students_add.html',
-                  context={'form': form})
+                  context={'form': form, 'page_title': 'Add Students'})
 
 
 def groups_add(request):
@@ -68,7 +63,7 @@ def groups_add(request):
         form = GroupsAddForm()
     return render(request,
                   'groups_add.html',
-                  context={'form': form})
+                  context={'form': form, 'page_title': 'Add Group'})
 
 
 def students_edit(request, pk):
@@ -85,7 +80,7 @@ def students_edit(request, pk):
         form = StudentsAddForm(instance=student)
     return render(request,
                   'students_edit.html',
-                  context={'form': form, 'pk': pk})
+                  context={'form': form, 'pk': pk, 'page_title': 'Edit Students'})
 
 
 def groups_edit(request, pk):
@@ -102,7 +97,7 @@ def groups_edit(request, pk):
         form = GroupsAddForm(instance=group)
     return render(request,
                   'groups_edit.html',
-                  context={'form': form, 'pk': pk})
+                  context={'form': form, 'pk': pk, 'page_title': 'Edit Group'})
 
 
 def contact(request):

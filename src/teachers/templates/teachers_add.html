@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Teachers</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block content %}
 ADD TEACHER
 <form action="{% url 'teachers-add' %}" method="post">
     {% csrf_token %}
@@ -13,5 +8,4 @@ ADD TEACHER
     <input name="submit" type="submit">
 </form>
 
-</body>
-</html>
+{% endblock content %}

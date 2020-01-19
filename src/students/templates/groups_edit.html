@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Groups</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block content %}
 EDIT GROUPS
 <form action="{% url 'groups-edit' pk %}" method="post">
     {% csrf_token %}
@@ -13,5 +8,4 @@ EDIT GROUPS
     <input name="submit" type="submit">
 </form>
 
-</body>
-</html>
+{% endblock content %}

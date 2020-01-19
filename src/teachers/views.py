@@ -14,15 +14,11 @@ def generate_teacher(request):
 
 def teachers(request):
     queryset = Teacher.objects.all()
-    response = ''
     fn = request.GET.get('parameter')
     if fn:
         queryset = queryset.filter(Q(first_name__contains=fn) |
                                    Q(last_name__contains=fn) | Q(email__contains=fn))
-    for teacher in queryset:
-        response += teacher.get_info() + f'<a href="{reverse("teachers-edit", args=[teacher.id])}">' \
-                                         f'<br>Edit</a>' + '<br>' + '<br>'
-    return render(request, 'teachers_list.html', context={'teachers_list': response})
+    return render(request, 'teachers_list.html', context={'teachers': queryset, 'page_title': 'Teachers List'})
 
 
 def teachers_add(request):
@@ -35,7 +31,7 @@ def teachers_add(request):
         form = TeachersAddForm()
     return render(request,
                   'teachers_add.html',
-                  context={'form': form})
+                  context={'form': form, 'page_title': 'Add Teachers'})
 
 
 def teachers_edit(request, pk):
@@ -52,4 +48,4 @@ def teachers_edit(request, pk):
         form = TeachersAddForm(instance=teacher)
     return render(request,
                   'teachers_edit.html',
-                  context={'form': form, 'pk': pk})
+                  context={'form': form, 'pk': pk, 'page_title': 'Edit Teachers'})

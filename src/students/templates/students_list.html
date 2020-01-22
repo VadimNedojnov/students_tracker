@@ -24,6 +24,7 @@
         <th>Email</th>
         <th>Telephone</th>
         <th>Address</th>
+        <th>Group</th>
         <th>Edit Link</th>
     </tr>
     {% for student in students %}
@@ -35,6 +36,7 @@
             <td>{{ student.email }}</td>
             <td>{{ student.telephone }}</td>
             <td>{{ student.address }}</td>
+            <td>{{ student.group.name }}</td>
             <td><a href="{% url 'students-edit' student.id %}">Edit</a></td>
         </tr>
     {% endfor %}

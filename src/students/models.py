@@ -15,6 +15,9 @@ class Student(models.Model):
     # add avatar TODO
     telephone = models.CharField(max_length=16)    # clear phone TODO
     address = models.CharField(max_length=255, null=True, blank=True)
+    group = models.ForeignKey('students.Group',
+                              null=True, blank=True,
+                              on_delete=models.CASCADE)
 
     def get_info(self):
         return f'First Name: {self.first_name}, <br>Last Name: {self.last_name}, ' \
@@ -28,21 +31,24 @@ class Student(models.Model):
                       last_name=fake.last_name(),
                       birth_date=fake.date_between(start_date="-30y", end_date="-17y"),
                       email=fake.email(),
-                      telephone=fake.phone_number(),
+                      telephone='12345678',
                       address=fake.address()
                       )
-        student.save()
-        return f"First Name: {student.first_name}; <br>Last Name: {student.last_name};" \
-               f"<br>Birth date: {student.birth_date}; <br>Email: {student.email};" \
-               f"<br>Telephone: {student.telephone}, <br>Address: {student.address}"
+        # student.save()
+        return student
+            # f"First Name: {student.first_name}; <br>Last Name: {student.last_name};" \
+            #    f"<br>Birth date: {student.birth_date}; <br>Email: {student.email};" \
+            #    f"<br>Telephone: {student.telephone}, <br>Address: {student.address}"
 
 
 class Group(models.Model):
     name = models.CharField(max_length=20)
     students_count = models.CharField(max_length=5)
     students_with_grants_count = models.CharField(max_length=5)
-    group_leader_name = models.CharField(max_length=20)
-    start_lessons_time = models.TimeField()
+    group_leader_name = models.ForeignKey('students.Student', null=True, blank=True,
+                                          on_delete=models.CASCADE, related_name='group_leader_name')
+    start_lessons_time = models.TimeField(null=True, blank=True)
+    headman = models.ForeignKey('teachers.Teacher', null=True, blank=True, on_delete=models.CASCADE)
 
     def get_info(self):
         return f'Group Name: {self.name}, <br>Students count: {self.students_count}, ' \
@@ -57,7 +63,8 @@ class Group(models.Model):
                     students_count=fake.random_int(min=10, max=35, step=1),
                     students_with_grants_count=fake.random_int(min=0, max=5, step=1),
                     group_leader_name=fake.name(),
-                    start_lessons_time=fake.time(pattern="%H:00:00", end_datetime=None)
+                    start_lessons_time=fake.time(pattern="%H:00:00", end_datetime=None),
+                    headman=fake.name()
                     )
         group.save()
         return f"Group Name: {group.name}; <br />Students count: {group.students_count};" \

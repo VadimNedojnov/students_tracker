@@ -9,13 +9,13 @@ from faker import Faker
 class Teacher(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    birth_date = models.DateField()
-    email = models.EmailField()
+    birth_date = models.DateField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
     # add avatar TODO
-    telephone = models.CharField(max_length=16)    # clear phone TODO
+    telephone = models.CharField(max_length=16, null=True, blank=True)    # clear phone TODO
     address = models.CharField(max_length=255, null=True, blank=True)
-    subject = models.CharField(max_length=20)
-    experience = models.CharField(max_length=3)
+    subject = models.CharField(max_length=20, null=True, blank=True)
+    experience = models.CharField(max_length=3, null=True, blank=True)
 
     def get_info(self):
         return f'First Name: {self.first_name}, <br>Last Name: {self.last_name}, <br>Birth date: {self.birth_date},' \

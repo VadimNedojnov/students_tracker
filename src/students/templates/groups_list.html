@@ -25,6 +25,7 @@
         <th>Students with grants</th>
         <th>Group leader name</th>
         <th>Start Lessons Time</th>
+        <th>Headman</th>
         <th>Edit Link</th>
     </tr>
     {% for group in groups %}
@@ -33,8 +34,9 @@
             <td>{{ group.name }}</td>
             <td>{{ group.students_count }}</td>
             <td>{{ group.students_with_grants_count }}</td>
-            <td>{{ group.group_leader_name }}</td>
+            <td>{{ group.group_leader_name.first_name }}</td>
             <td>{{ group.start_lessons_time }}</td>
+            <td>{{ group.headman.first_name }}</td>
             <td><a href="{% url 'groups-edit' group.id %}">Edit</a></td>
         </tr>
     {% endfor %}

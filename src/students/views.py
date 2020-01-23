@@ -12,7 +12,7 @@ def generate_student(request):
 
 
 def students(request):
-    queryset = Student.objects.all()
+    queryset = Student.objects.all().select_related('group')
     # response = ''
     fn = request.GET.get('name')
     if fn:
@@ -33,7 +33,7 @@ def generate_group(request):
 
 
 def groups(request):
-    queryset = Group.objects.all()
+    queryset = Group.objects.all().select_related('group_leader_name', 'headman')
     fn = request.GET.get('name')
     if fn:
         queryset = queryset.filter(name__contains=fn)

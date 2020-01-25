@@ -40,6 +40,13 @@ class Student(models.Model):
             #    f"<br>Birth date: {student.birth_date}; <br>Email: {student.email};" \
             #    f"<br>Telephone: {student.telephone}, <br>Address: {student.address}"
 
+    def __str__(self):
+        return f'ID: {self.id}, {self.full_name}'
+
+    @property
+    def full_name(self):
+        return f'First Name: {self.first_name}, Last Name: {self.last_name}'
+
 
 class Group(models.Model):
     name = models.CharField(max_length=20)
@@ -71,3 +78,6 @@ class Group(models.Model):
                f"<br />Students with grants count: {group.students_with_grants_count}; " \
                f"<br />Group leader name: {group.group_leader_name}; " \
                f"<br />Start lessons time: {group.start_lessons_time}"
+
+    def __str__(self):
+        return f'ID: {self.id}, Group Name: {self.name}'

@@ -40,3 +40,6 @@ class Teacher(models.Model):
                f"<br>Birth date: {teacher.birth_date}; <br>Email: {teacher.email};" \
                f"<br>Telephone: {teacher.telephone}; <br>Address: {teacher.address};" \
                f"<br>Subject: {teacher.subject}; <br>Working experience: {teacher.experience}"
+
+    def __str__(self):
+        return f'ID: {self.id}, Name: {self.first_name}'

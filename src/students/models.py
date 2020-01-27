@@ -11,13 +11,18 @@ class Student(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     birth_date = models.DateField()
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     # add avatar TODO
-    telephone = models.CharField(max_length=16)    # clear phone TODO
+    telephone = models.CharField(max_length=30, unique=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     group = models.ForeignKey('students.Group',
                               null=True, blank=True,
                               on_delete=models.CASCADE)
+
+    # def save(self, *args, **kwargs):    # Как работает пре сейв и пост сейв
+        # pre_save
+        # super().save(*args, **kwargs)
+        # post_save
 
     def get_info(self):
         return f'First Name: {self.first_name}, <br>Last Name: {self.last_name}, ' \
@@ -31,7 +36,7 @@ class Student(models.Model):
                       last_name=fake.last_name(),
                       birth_date=fake.date_between(start_date="-30y", end_date="-17y"),
                       email=fake.email(),
-                      telephone='12345678',
+                      telephone=''.join(i for i in fake.phone_number() if i.isdigit()),
                       address=fake.address()
                       )
         # student.save()

@@ -10,9 +10,9 @@ class Teacher(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     birth_date = models.DateField(null=True, blank=True)
-    email = models.EmailField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True, unique=True)
     # add avatar TODO
-    telephone = models.CharField(max_length=16, null=True, blank=True)    # clear phone TODO
+    telephone = models.CharField(max_length=16, null=True, blank=True, unique=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     subject = models.CharField(max_length=20, null=True, blank=True)
     experience = models.CharField(max_length=3, null=True, blank=True)

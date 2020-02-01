@@ -7,6 +7,7 @@ import os
 
 
 from students.models import Student, Group
+from students.tasks import send_email_async
 
 
 class BaseStudentForm(ModelForm):
@@ -68,8 +69,15 @@ class ContactForm(Form):
         message = data['text']
         email_from = data['email']
         recipient_list = [settings.EMAIL_HOST_USER, ]
-        send_mail(subject, message, email_from, recipient_list)
-        req_path = os.path.join(os.getcwd(), 'emails.txt')
-        with open(req_path, 'a') as file:
-            result = f'From: {email_from}, Subject: {subject}, message: {message}.'
-            file.write(result)
+        student = Student.objects.get_or_create(first_name='Leo', last_name='Ole', birth_date='2000-05-18',
+                                                email=email_from, telephone='12345678',
+                                                address='Dnipro', group=None)[0]
+        # student = Student.objects.create(first_name='Leo', last_name='Ole', birth_date='2000-05-18',
+        #                                  email=email_from, telephone='12345678', address='Dnipro', group=None)
+        # send_mail(subject, message, email_from, recipient_list)
+        # send_email_async.delay(subject, message, email_from, recipient_list)
+        result = send_email_async.delay(subject, message, recipient_list, student.id)
+        # req_path = os.path.join(os.getcwd(), 'emails.txt')
+        # with open(req_path, 'a') as file:
+        #     result = f'From: {email_from}, Subject: {subject}, message: {message}.'
+        #     file.write(result)

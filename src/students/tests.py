@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.urls import reverse
 
 
 from students.models import Student
@@ -27,3 +28,17 @@ class StudentTestCase(TestCase):
         self.assertEqual(Student.objects.get(first_name='John').get_info(),
                          'First Name: John, <br>Last Name: Silver, <br>Birth date: 1000-05-18, '
                          '<br>Email: abc@gmail.com, <br>Telephone: 15998754784, <br>Address: Minsk')
+
+
+class TestContact(TestCase):
+    def test_contact_is_valid(self):
+        data = {'email': 'xperia.vad@mail.com',
+                'subject': 'subject',
+                'text': 'text'}
+        response = self.client.post(reverse('contact'), data)
+        assert response.status_code in (302, 301)
+        self.assertEqual(response.status_code, 302)    # то же самое, что тест выше
+
+        data['email'] = 'WRONG'
+        response = self.client.post(reverse('contact'))
+        assert response.status_code == 200

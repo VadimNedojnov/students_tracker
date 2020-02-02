@@ -25,6 +25,9 @@
         <th>Telephone</th>
         <th>Address</th>
         <th>Group</th>
+        <th>Email Confirmed</th>
+        <th>User Logged In</th>
+        <th>User Platform</th>
         <th>Edit Link</th>
     </tr>
     {% for student in students %}
@@ -37,6 +40,9 @@
             <td>{{ student.telephone }}</td>
             <td>{{ student.address }}</td>
             <td>{{ student.group.name }}</td>
+            <td>{{ student.email_confirmed }}</td>
+            <td>{{ student.user_logged_in }}</td>
+            <td>{{ student.user_platform }}</td>
             <td><a href="{% url 'students-edit' student.id %}">Edit</a></td>
         </tr>
     {% endfor %}

@@ -4,6 +4,7 @@ from django.conf import settings
 
 
 import os
+import platform
 
 
 from students.models import Student, Group
@@ -81,3 +82,48 @@ class ContactForm(Form):
         # with open(req_path, 'a') as file:
         #     result = f'From: {email_from}, Subject: {subject}, message: {message}.'
         #     file.write(result)
+
+
+class RegistrationForm(Form):
+    email = EmailField()
+    first_name = CharField()
+    last_name = CharField()
+    birth_date = CharField()
+    telephone = CharField()
+    username = CharField()
+    password = CharField()
+
+    def save(self):
+        data = self.cleaned_data
+        subject = 'Email Confirmation'
+        email_from = data['email']
+        first_name = data['first_name']
+        last_name = data['last_name']
+        birth_date = data['birth_date']
+        telephone = data['telephone']
+        username = data['username']
+        password = data['password']
+        recipient_list = [email_from, ]
+        student = Student.objects.create(first_name=first_name, last_name=last_name, birth_date=birth_date,
+                                         email=email_from, telephone=telephone, group=None,
+                                         username=username, password=password, user_platform=platform.uname().node)
+        activation_link = f'http://127.0.0.1:8000/students/activation/{student.id}'
+        message = f'Activate your account, please \n{activation_link}'
+        result = send_email_async.delay(subject, message, recipient_list, student.id)
+
+
+class LoginForm(Form):
+    username = CharField()
+    password = CharField()
+
+    def save(self):
+        data = self.cleaned_data
+        username = data['username']
+        password = data['password']
+        student = Student.objects.get(username=username)
+        if student.password == password:
+            student.user_logged_in = True
+            student.save()
+        else:
+            raise ValidationError(f'User Name or Password is invalid')
+

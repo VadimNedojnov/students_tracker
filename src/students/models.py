@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
 from faker import Faker
 
 
@@ -18,6 +22,11 @@ class Student(models.Model):
     group = models.ForeignKey('students.Group',
                               null=True, blank=True,
                               on_delete=models.CASCADE)
+    email_confirmed = models.BooleanField(default=False)
+    username = models.CharField(max_length=30, unique=True, null=True, blank=True)
+    password = models.CharField(max_length=30, null=True, blank=True)
+    user_logged_in = models.BooleanField(default=False)
+    user_platform = models.CharField(max_length=30, null=True, blank=True)
 
     # def save(self, *args, **kwargs):    # Как работает пре сейв и пост сейв
         # pre_save

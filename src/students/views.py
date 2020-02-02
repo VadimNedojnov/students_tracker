@@ -1,10 +1,14 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse
+from django.template.loader import render_to_string
+
+
+import platform
 
 
 from students.models import Student, Group
-from students.forms import StudentsAddForm, GroupsAddForm, ContactForm
+from students.forms import StudentsAddForm, GroupsAddForm, ContactForm, RegistrationForm, LoginForm
 
 
 def generate_student(request):
@@ -110,4 +114,37 @@ def contact(request):
         form = ContactForm()
     return render(request,
                   'contact.html',
+                  context={'form': form})
+
+
+def registration(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('students'))
+    else:
+        form = RegistrationForm()
+    return render(request,
+                  'registration.html',
+                  context={'form': form})
+
+
+def activation(request, pk):
+    student = Student.objects.get(id=pk)
+    student.email_confirmed = True
+    student.save()
+    return HttpResponseRedirect(reverse('students'))
+
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('students'))
+    else:
+        form = LoginForm()
+    return render(request,
+                  'login.html',
                   context={'form': form})

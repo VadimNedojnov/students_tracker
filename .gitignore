@@ -6,3 +6,4 @@ env/
 .idea/
 *.sqlite3
 settings_local.py
+src/static/

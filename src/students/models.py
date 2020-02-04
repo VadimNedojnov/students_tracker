@@ -86,3 +86,12 @@ class Group(models.Model):
 
     def __str__(self):
         return f'ID: {self.id}, Group Name: {self.name}'
+
+
+class Logger(models.Model):
+    path = models.CharField(max_length=200)
+    method = models.CharField(max_length=10)
+    time_delta = models.CharField(max_length=30)
+    user_id = models.IntegerField()
+    user_name = models.CharField(max_length=20, null=True, blank=True)
+    created = models.DateTimeField(auto_now=True)

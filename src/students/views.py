@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 
-from students.models import Student, Group
+from students.models import Student, Group, Logger
 from students.forms import StudentsAddForm, GroupsAddForm, ContactForm
 
 
@@ -111,3 +111,12 @@ def contact(request):
     return render(request,
                   'contact.html',
                   context={'form': form})
+
+
+def admin_logger(request):
+    queryset = Logger.objects.all()
+    fn = request.GET.get('name')
+    if fn:
+        queryset = queryset.filter(name__contains=fn)
+    return render(request, 'admin_logger_list.html', context={'admin_logger': queryset,
+                                                              'page_title': 'Admin Logger List'})

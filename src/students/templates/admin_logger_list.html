@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+
+<div style="float:left;border-left">
+    <form action="{% url 'admin_logger' %}" method="get">
+        <input name="name">
+        <input name="submit" type="submit">
+    </form>
+</div>
+<br>
+
+<table style="width:70%">
+    <caption style="font-size:35px"><b>{{ page_title }}</b></caption>
+    <tr>
+        <th>ID</th>
+        <th>Path</th>
+        <th>Method</th>
+        <th>Time Delta</th>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>Created</th>
+    </tr>
+    {% for line in admin_logger %}
+        <tr>
+            <td>{{ line.id }}</td>
+            <td>{{ line.path }}</td>
+            <td>{{ line.method }}</td>
+            <td>{{ line.time_delta }}</td>
+            <td>{{ line.user_id }}</td>
+            <td>{{ line.user_name }}</td>
+            <td>{{ line.created }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock content %}

@@ -1,10 +1,12 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib.auth import login, authenticate
 
 
-from students.models import Student, Group
-from students.forms import StudentsAddForm, GroupsAddForm, ContactForm
+from students.models import Student, Group, Logger
+from students.forms import StudentsAddForm, GroupsAddForm, ContactForm, \
+    UserRegistrationForm, LoginUserForm
 
 
 def generate_student(request):
@@ -111,3 +113,42 @@ def contact(request):
     return render(request,
                   'contact.html',
                   context={'form': form})
+
+
+def admin_logger(request):
+    queryset = Logger.objects.all()
+    fn = request.GET.get('name')
+    if fn:
+        queryset = queryset.filter(name__contains=fn)
+    return render(request, 'admin_logger_list.html', context={'admin_logger': queryset,
+                                                              'page_title': 'Admin Logger List'})
+
+
+def register(request):
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('students'))
+    else:
+        form = UserRegistrationForm()
+    return render(request,
+                  'registration.html',
+                  context={'form': form, 'page_title': 'Registration'})
+
+
+def login_user(request):
+    if request.method == "POST":
+        form = LoginUserForm(request.POST)
+        if form.is_valid():
+            user = authenticate(request,
+                                username=form.cleaned_data['username'],
+                                password=form.cleaned_data['password']
+                                )
+            login(request, user)
+            return HttpResponseRedirect(reverse('students'))
+    else:
+        form = LoginUserForm()
+    return render(request,
+                  'login_user.html',
+                  context={'form': form, 'page_title': 'Login'})

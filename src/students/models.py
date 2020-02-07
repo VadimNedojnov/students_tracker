@@ -2,6 +2,9 @@ from django.db import models
 from faker import Faker
 
 
+from students import model_choices as mch
+
+
 '''
 CREATE TABLE students_student (first_name varchar(20), ...);
 '''
@@ -89,9 +92,9 @@ class Group(models.Model):
 
 
 class Logger(models.Model):
-    path = models.CharField(max_length=200)
-    method = models.CharField(max_length=10)
-    time_delta = models.CharField(max_length=30)
-    user_id = models.IntegerField()
+    path = models.CharField(max_length=128)
+    method = models.PositiveIntegerField(choices=mch.METHOD_CHOICES)
+    time_delta = models.DecimalField(max_digits=5, decimal_places=3)
+    user_id = models.IntegerField(null=True, blank=True)
     user_name = models.CharField(max_length=20, null=True, blank=True)
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)

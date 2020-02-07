@@ -3,7 +3,7 @@ from django.urls import path
 
 from students.views import (generate_student, students,
                             students_add, students_edit,
-                            contact, admin_logger)
+                            contact, admin_logger, register, login_user)
 from students.views import (generate_group, groups_add,
                             groups, groups_edit)
 
@@ -19,4 +19,8 @@ urlpatterns = [
     path('groups/list/', groups, name='groups'),
     path('groups/add/', groups_add, name='groups-add'),
     path('groups/edit/<int:pk>/', groups_edit, name='groups-edit'),
+
+    path('register', register, name='register'),
+    path('login_user', login_user, name='login_user'),
+
 ]

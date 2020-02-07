@@ -2,6 +2,7 @@ import time
 
 
 from students.models import Logger
+from students import model_choices as mch
 
 
 class LoggerMiddleware:
@@ -15,9 +16,14 @@ class LoggerMiddleware:
 
         end = time.time()
         full_time = end - start
-        full_path = request.build_absolute_uri()
-        if '/admin/' in full_path:
-            Logger.objects.create(path=full_path, method=request.method, time_delta=full_time,
-                                  user_id=int(request.user.pk), user_name=request.user.username)
+        admin_url = '/admin/'
+        if request.path.startswith(admin_url):
+            Logger.objects.create(
+                path=request.path,
+                method=mch.METHOD_CHOICES_REVERSED[request.method],
+                time_delta=full_time,
+                user_id=request.user.pk,
+                user_name=request.user.username
+            )
 
         return response

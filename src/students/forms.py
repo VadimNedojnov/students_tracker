@@ -1,6 +1,7 @@
 from django.forms import ModelForm, Form, EmailField, CharField, ValidationError
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.models import User
 
 
 import os
@@ -81,3 +82,19 @@ class ContactForm(Form):
         # with open(req_path, 'a') as file:
         #     result = f'From: {email_from}, Subject: {subject}, message: {message}.'
         #     file.write(result)
+
+
+class UserRegistrationForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.set_password(self.cleaned_data['password'])
+        super().save(commit)
+
+
+class LoginUserForm(Form):
+    username = CharField()
+    password = CharField()

@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'n8&w%%1_78t749=-4b53r2#(!zc$+lk$9hlr1kblz67$r_%&@s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*', '127.0.0.1']
 
@@ -126,6 +126,8 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# home/vadim/hillel/Students_Project/students_tracker/src/static
+
 LOGGING = {
     'version': 1,
     'filters': {
@@ -154,7 +156,6 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
-
 
 try:
     from students_tracker.settings_local import *

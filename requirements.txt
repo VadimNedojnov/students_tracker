@@ -1,6 +1,6 @@
 backcall==0.1.0
 decorator==4.4.1
-Django==2.2.9
+Django==2.2.13
 entrypoints==0.3
 Faker==3.0.0
 flake8==3.7.9
